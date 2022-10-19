@@ -10,9 +10,6 @@ from statsmodels.tsa.arima.model import ARIMA
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
-
-
-
 btc = web.get_data_yahoo(['BTC-USD'], start=datetime.datetime(2018, 1, 2), end=datetime.datetime(2021, 12, 31))
 
 btc = btc['Close']
@@ -20,7 +17,6 @@ btc = btc['Close']
 btc.to_csv("data/btc.csv")
 
 btc = pd.read_csv("data/btc.csv")
-
 
 btc.index = pd.to_datetime(btc['Date'], format='%Y-%m-%d')
 del btc['Date']
@@ -60,15 +56,11 @@ plt.plot(test, color = "red", label = 'Testing')
 plt.plot(y_pred_out, color='green', label = 'ARMA Predictions')
 plt.legend()
 
-
 import numpy as np
 from sklearn.metrics import mean_squared_error
 
 arma_rmse = np.sqrt(mean_squared_error(test["BTC-USD"].values, y_pred_df["Predictions"]))
 print("ARMA RMSE: ",arma_rmse)
-
-
-
 
 ARIMAmodel = ARIMA(y, order = (4, 2, 4))
 ARIMAmodel = ARIMAmodel.fit()
@@ -81,14 +73,11 @@ y_pred_out = y_pred_df["Predictions"]
 plt.plot(y_pred_out, color='Yellow', label = 'ARIMA Predictions')
 plt.legend()
 
-
 import numpy as np
 from sklearn.metrics import mean_squared_error
 
 arma_rmse = np.sqrt(mean_squared_error(test["BTC-USD"].values, y_pred_df["Predictions"]))
 print("ARIMA RMSE: ",arma_rmse)
-
-
 
 SARIMAXmodel = SARIMAX(y, order = (1, 0, 1), seasonal_order=(2,2,2,12))
 SARIMAXmodel = SARIMAXmodel.fit()
@@ -103,10 +92,3 @@ plt.ylabel('BTC Price')
 plt.xlabel('Date')
 plt.title("BTC Price Prediction")
 plt.legend()
-
-
-# import numpy as np
-# from sklearn.metrics import mean_squared_error
-
-# arma_rmse = np.sqrt(mean_squared_error(test["BTC-USD"].values, y_pred_df["Predictions"]))
-# print("SARIMA RMSE: ",arma_rmse)
